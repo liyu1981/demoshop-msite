@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Facebook Marketing Optimization Tool">
+    <link rel='shortcut icon' type='image/x-icon' href='/static/images/favicon.ico' />
+
+    {% block title %}
+    <title>Keystone</title>
+    {% endblock %}
+
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <!-- React Core -->
+    <!-- And we are not using fb.me version, because there is little hope that cloudflare is not totally blocked in mainland China -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-dom.min.js"></script>
+
+    <link href="/static/css/main.css" rel="stylesheet">
+
+    {% block head_auxiliary %}
+    {% endblock %}
+
+  </head>
+
+  {% block body_tag %}
+  <body>
+  {% endblock %}
+
+    <div id="fb-root"></div>
+
+    <!-- Navigation -->
+    <nav class="top-banner navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/">Keystone</a>
+          </div>
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+              {% if user.is_authenticated %}
+                <li><p class="navbar-text">
+                  Logged in as <a href="/auth/fbuser/">{{ user.username }}</a>
+                </p></li>
+                <li><a href="/auth/logout/">Log out</a></li>
+              {% else %}
+                <li><a href="/auth/login/">Log in</a></li>
+              {% endif %}
+            </ul>
+          </div>
+          <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+      </nav>
+
+    <!-- main content container -->
+    <div class="container main-container">
+      {% block body_block %}
+      <div class="jumbotron">
+        <h1>Placeholder Content</h1>
+        <p>This is placeholder content to be replaced by the page</p>
+      </div>
+      {% endblock %}
+    </div> <!-- /main content container -->
+  </body>
+</html>

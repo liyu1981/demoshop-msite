@@ -1,0 +1,27 @@
+{% extends 'common/base.html' %}
+{% load bootstrap %}
+
+{% block body_block %}
+
+<div class="container">
+  {% if next %}
+      {% if user.is_authenticated %}
+      <p>Your account doesn't have access to this page. To proceed,
+      please login with an account that has access.</p>
+      {% else %}
+      <p>Please login to see this page.</p>
+      {% endif %}
+  {% endif %}
+
+  <form method="post" action="/auth/login/">
+    {% csrf_token %}
+    {{ form|bootstrap }}
+    <input class="btn btn-primary" type="submit" value="login" />
+    <input type="hidden" name="next" value="{{ next }}" />
+  </form>
+
+  <br/>
+  <a class="btn btn-primary" href='/auth/register/'>register</a>
+</div>
+
+{% endblock %}

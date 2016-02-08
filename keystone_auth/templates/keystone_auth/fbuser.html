@@ -1,0 +1,45 @@
+{% extends 'common/base.html' %}
+{% load bootstrap %}
+
+{% block body_block %}
+
+<div class="container">
+  <div class="row">
+    <h1>Manage logged in Facebook users</h1>
+    {% if request.error_msg %}
+
+    {% endif %}
+    {% if fbusers %}
+      <p>Currently logged in users:</p>
+      <table class="table table-bordered">
+        <thead>
+          <tr><td>ID</td><td>Name</td><td>Action</td></tr>
+        </thead>
+        <tbody>
+          {% for fbuser in fbusers %}
+            <tr>
+              <td>{{ fbuser.fb_userid }}</td>
+              <td>{{ fbuser.fb_username }}</td>
+              <td><a class="btn btn-danger"
+                href="{% url 'keystone_auth:delete_fbuser' pk=fbuser.id %}">Remove
+                </a></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>There is no associated Facebook users yet.</p>
+      <form method="post" role="form" action="{% url 'keystone_auth:fboauth' %}">
+        {% csrf_token %}
+        <fieldset>
+          <input type="hidden" name="next" value="{% url 'keystone_auth:fbuser' %}">
+          <button type="submit" class="btn btn-md btn-primary">
+            <i class="fa fa-facebook-official"></i>Add Facebook User
+          </button>
+        </fieldset>
+      </form>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

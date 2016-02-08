@@ -1,0 +1,31 @@
+{% extends 'common/base.html' %}
+{% load bootstrap %}
+
+{% block body_block %}
+
+<div class="container">
+  <div class="row">
+    <div id="rule_execution_results_table"></div>
+    <script>{{ server_js | safe }}</script>
+    {% if rule_execution_results_headers %}
+      <table class="table">
+      <tr>
+      {% for head in rule_execution_results_headers %}
+        <th>{{ head }}</th>
+      {% endfor %}
+      </tr>
+      {% for result in rule_execution_results %}
+      <tr>
+        {% for column in result %}
+          <td>{{ column }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+      </table>
+    {% else %}
+      They are all dead, Jim.
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
