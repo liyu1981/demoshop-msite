@@ -1,0 +1,22 @@
+{% extends 'demoshop/base.html' %}
+
+{% block body_block %}
+<div class="container">
+   <div class="row">
+     <div class="col-sm-12 col-md-6">
+       <img width="100%" src="{{ product.image_link }}"
+            alt="{{ product.title }}"></img>
+     </div>
+     <div class="col-sm-12 col-md-6">
+       <center>
+       <h2>{{ product.title }}</h2>
+       <p>{{ product.description }}</p>
+       <p>Price: {{ product.price }}</p>
+       <p>Availability: {{ product.availability }}</p>
+       <a href="addtocart?id={{ product.id }}"
+          class="btn btn-primary btn-lg">Buy</a>
+       </center>
+     </div>
+   </div>
+</div>
+{% endblock %}

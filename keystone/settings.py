@@ -177,5 +177,10 @@ LOGGING = {
             'level': LOG_LEVEL,
             'propagate': True,
         },
-    },
+        'demoshop': {
+            'handlers': ['default'],
+            'level': LOG_LEVEL,
+            'propagate': True,
+        },
+     },
 }

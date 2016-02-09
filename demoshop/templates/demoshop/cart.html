@@ -1,0 +1,26 @@
+{% extends 'demoshop/base.html' %}
+
+{% block body_block %}
+<div class="container">
+   <div class="row">
+     {% for product in products %}
+     <div class="media">
+       <div class="media-left">
+         <a href="#">
+           <img width="128px" class="media-object"
+                src="{{ product.image_link }}"
+                alt="{{ product.title }}">
+         </a>
+       </div>
+       <div class="media-body">
+         <h4 class="media-heading">{{ product.id }}</h4>
+         <p>Price: {{ product.price }},
+            Availablity: {{ product.availability }}</p>
+       </div>
+     </div>
+     {% endfor %}
+   </div>
+   </hr>
+   <a href="pay" class="btn btn-primary btn-block">Pay {{ total }} USD Now!</a>
+</div>
+{% endblock %}
