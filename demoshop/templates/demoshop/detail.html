@@ -17,6 +17,20 @@
           class="btn btn-primary btn-lg">Buy</a>
        </center>
      </div>
+     <script>
+       (function () {
+         function _parseValue(vstr) {
+           return parseFloat(vstr.replace('USD', '').trim());
+         }
+         fbq('track', 'ViewContent', {
+           content_type: 'product',
+           content_ids: ['{{ product.id }}'],
+           content_name: '{{ product.title }}',
+           value: _parseValue('{{ product.price }}'),
+           currency: 'USD'
+         });
+       })();
+     </script>
    </div>
 </div>
 {% endblock %}

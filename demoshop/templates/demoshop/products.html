@@ -41,11 +41,43 @@
           <p>{{ product.description }}</p>
           <p>Price: {{ product.price }}, Availablity: {{ product.availability }}</p>
           <p><a href="addtocart?id={{ product.id }}"
-                class="btn btn-primary" role="button">Buy</a></p>
+                class="btn btn-primary btn-buy" data-productid="{{ product.id }}">Buy</a></p>
         </div>
       </div>
     </div>
     {% endfor %}
+    <script>
+      (function() {
+        function _parseValue(vstr) {
+          return parseFloat(vstr.replace('USD', '').trim());
+        }
+
+        contentids = [];
+        total = 0;
+        {% for product in products %}
+        contentids.push('{{ product.id }}');
+        total = total + _parseValue('{{ product.price }}');
+        {% endfor %}
+
+        fbq('track', 'Search', {
+          search_string: '{{ currentCategory }}',
+          content_category: '{{ currentCategory }}',
+          content_type: 'product',
+          content_ids: contentids.slice(0, 5),
+          value: total,
+          currency: 'USD'
+        });
+
+        $('.btn-buy').click(function(event) {
+          var productid = $(event.currentTarget).data('productid');
+          fbq('track', 'AddToCart', {
+            content_ids: [productid],
+            content_type: 'product'
+          });
+          //return false;
+        });
+      })();
+    </script>
   </div>
 </div>
 {% endblock %}

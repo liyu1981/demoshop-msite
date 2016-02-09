@@ -21,6 +21,32 @@
      {% endfor %}
    </div>
    </hr>
-   <a href="pay" class="btn btn-primary btn-block">Pay {{ total }} USD Now!</a>
+   <a href="pay" class="btn btn-primary btn-block btn-pay">
+     Pay {{ total }} USD Now!
+   </a>
+   <script>
+   (function() {
+     function _parseValue(vstr) {
+       return parseFloat(vstr.replace('USD', '').trim());
+     }
+
+     contentids = [];
+     total = 0;
+     {% for product in products %}
+     contentids.push('{{ product.id }}');
+     total = total + _parseValue('{{ product.price }}');
+     {% endfor %}
+
+     $('.btn-pay').click(function() {
+       fbq('track', 'InitiateCheckout', {
+         content_type: 'product',
+         content_ids: contentids,
+         value: total,
+         currency: 'USD'
+       });
+       // return false;
+     });
+   })();
+   </script>
 </div>
 {% endblock %}

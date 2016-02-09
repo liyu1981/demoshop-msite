@@ -1,7 +1,10 @@
 import logging
 import re
+import json
+import urllib
 from django.views.generic import TemplateView
 from django.shortcuts import redirect
+from django.core.urlresolvers import reverse
 from models import Shop
 
 logger = logging.getLogger(__name__)
@@ -80,6 +83,18 @@ def addToCart(request):
         Shop._cart.append(product)
     return redirect('demoshop:cart')
 
+def url_with_querystring(path, **kwargs):
+    return path + '?' + urllib.urlencode(kwargs)
+
 def pay(request):
+    ids = []
+    for product in Shop._cart:
+        ids.append(product['id'])
+    contentids = json.dumps(ids)
+    total = calcTotal(Shop._cart)
+
     Shop._cart = []
-    return redirect('demoshop:thankyou')
+
+    return redirect(url_with_querystring(reverse('demoshop:thankyou'),
+        contentids=contentids, total=total
+    ))
