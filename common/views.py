@@ -3,7 +3,6 @@ from django.shortcuts import render
 from django.conf import settings
 from facebookads.api import FacebookAdsApi
 from facebookads.objects import AdUser
-from keystone_auth.models import FBUser
 
 logger = logging.getLogger(__name__)
 

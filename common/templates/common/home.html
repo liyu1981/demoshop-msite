@@ -2,38 +2,6 @@
 
 {% block body_block %}
 <div class="container">
-  {% if user.is_authenticated %}
-    <h1>Welcome, {{ user.username }}. Thanks for logging in.</h1>
-    {% if fbuser %}
-      <h2>Here is your Facebook User:</h2>
-      <ul>
-        <li>{{ fbuser.fb_username }} ({{ fbuser.fb_userid }})</li>
-      </ul>
-    {% else %}
-      <h2>There is no associated Facebook user yet. Login in with Facebook
-        <a href='/auth/fbuser/'>here</a>.</h2>
-    {% endif %}
-    {% if accounts %}
-      <h2>Here is the ad accounts associated with your Facebook user:</h2>
-      <table class="table table-bordered">
-        <thead><tr>
-          <td>id</td><td>name</td>
-        </tr></thead>
-        <tbody>
-          {% for account in accounts %}
-            <tr>
-              <td>{{ account.id }}</td>
-              <td>{{ account.name }}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      <h2>There is no ad accounts associated.</h2>
-    {% endif %}
-  {% else %}
-    <p>Please log in <a href='/auth/login/'>here</a></p>
-    <p>Or <a href='/auth/register/'>register</a> as new user.</p>
-  {% endif %}
+  Hello, world!
 </div>
 {% endblock %}

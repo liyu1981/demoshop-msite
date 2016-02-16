@@ -44,8 +44,6 @@ INSTALLED_APPS = [
     'sslserver',
     'bootstrapform',
     'common',
-    'keystone_auth',
-    'ads_monitor',
     'demoshop',
 ]
 
