@@ -1,5 +1,8 @@
 import logging
 import re
+import time
+import json
+import uuid
 from django.views.generic import TemplateView
 from django.shortcuts import redirect
 from models import Shop
@@ -32,6 +35,17 @@ def calcTotal(cart):
     for product in cart:
         total = total + getPriceFromString(product['price'])
     return total
+
+def calcTransRef(cart):
+    c = []
+    for product in cart:
+      c.append({
+        "title": product['title'],
+        "price": product['price'],
+        "image_link": product["image_link"]
+      })
+    trans = { "cart": c, "time": int(time.time()), "total": calcTotal(cart) }
+    return json.dumps(trans)
 
 
 class ProductsView(TemplateView):
@@ -69,6 +83,8 @@ class CartView(TemplateView):
         context = super(CartView, self).get_context_data(**kwargs)
         context['products'] = Shop._cart
         context['total'] = calcTotal(Shop._cart)
+        context['transref'] = calcTransRef(Shop._cart)
+        context['userref'] = str(uuid.uuid4())
         return context;
 
 def index(request):
