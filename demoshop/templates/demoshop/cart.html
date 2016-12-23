@@ -21,6 +21,44 @@
      {% endfor %}
    </div>
    </hr>
+
+   <div class="fb-messenger-checkbox"
+        origin="https://www.didi-ads.com:5566/demoshop/cart"
+        page_id="1563357783913549"
+        messenger_app_id="334467960089822"
+        user_ref="{{ userref }}"
+        prechecked="true"
+        allow_login="true"
+        size="xlarge">
+   </div>
+   <script>
+     window.fbAsyncInit = function() {
+       FB.init({
+         appId      : '334467960089822',
+         xfbml      : true,
+         version    : 'v2.6'
+       });
+     };
+
+     (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "//connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+
+     function fbMessengerConfirmOptIn() {
+       FB.AppEvents.logEvent('MessengerCheckboxUserConfirmation', null, {
+         'app_id':'334467960089822',
+         'page_id':'1563357783913549',
+         'ref':'{{ transref|safe }}',
+         'user_ref':'{{ userref }}'
+       });
+     }
+
+   </script>
+
    <a href="pay" class="btn btn-primary btn-block btn-pay">
      Pay {{ total }} USD Now!
    </a>
@@ -38,6 +76,7 @@
      {% endfor %}
 
      $('.btn-pay').click(function() {
+       fbMessengerConfirmOptIn();
        fbq('track', 'InitiateCheckout', {
          content_type: 'product',
          content_ids: contentids,
@@ -48,5 +87,6 @@
      });
    })();
    </script>
+
 </div>
 {% endblock %}
