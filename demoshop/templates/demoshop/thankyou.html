@@ -24,13 +24,20 @@
     console.log('Query variable %s not found', variable);
   }
 
-  var contentids = getQueryVariable('contentids');
-  var total = getQueryVariable('total');
+  var contentids = JSON.parse(getQueryVariable('contentids'));
+  //console.log('contentids', contentids, JSON.parse(contentids));
+  var total = parseFloat(getQueryVariable('total'));
   fbq('track', 'Purchase', {
     content_type: 'product',
     content_ids: contentids,
-    total: total,
+    value: total,
     currency: 'USD'
+  });
+  window.fbAsyncInitNext.push(function() {
+    var params = {};
+    params[FB.AppEvents.ParameterNames.CONTENT_ID] = contentids.join();
+    params[FB.AppEvents.ParameterNames.CONTENT_TYPE] = 'product';
+    FB.AppEvents.logPurchase(total, 'USD', params);
   });
 })();
 </script>
