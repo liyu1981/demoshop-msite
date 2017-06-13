@@ -4,6 +4,30 @@
 {% block head_auxiliary %}
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" ref="stylesheet" />
 
+<!-- Facebook SDK for JS -->
+<script>
+  window.fbAsyncInitNext = [];
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '334467960089822',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v2.8'
+    });
+    FB.AppEvents.logPageView();
+    window.fbAsyncInitNext.map(function(next) { next && next(); });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+<!-- End Facebook SDK for JS -->
+
 <!-- Facebook Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -35,4 +59,3 @@ src="https://www.facebook.com/tr?id=630465933724385&ev=PageView&noscript=1"
   </div>
 </nav>
 {% endblock %}
-

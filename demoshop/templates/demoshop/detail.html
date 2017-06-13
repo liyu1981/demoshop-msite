@@ -22,12 +22,19 @@
          function _parseValue(vstr) {
            return parseFloat(vstr.replace('USD', '').trim());
          }
-         fbq('track', 'ViewContent', {
+         fbq('track', 'ViewContent', _parseValue('{{ product.price }}'), {
            content_type: 'product',
            content_ids: ['{{ product.id }}'],
            content_name: '{{ product.title }}',
            value: _parseValue('{{ product.price }}'),
            currency: 'USD'
+         });
+         window.fbAsyncInitNext.push(function() {
+           var params = {};
+           params[FB.AppEvents.ParameterNames.CONTENT_ID] = '{{ product.id }}';
+           params[FB.AppEvents.ParameterNames.CONTENT_TYPE] = 'product';
+           params[FB.AppEvents.ParameterNames.CURRENCY] =  'USD';
+           FB.AppEvents.logEvent(FB.AppEvents.EventNames.VIEWED_CONTENT, _parseValue('{{ product.price }}'), params);
          });
        })();
      </script>

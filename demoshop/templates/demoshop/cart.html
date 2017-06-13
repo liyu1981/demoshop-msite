@@ -13,7 +13,7 @@
          </a>
        </div>
        <div class="media-body">
-         <h4 class="media-heading">{{ product.id }}</h4>
+         <h4 class="media-heading" data-product-id="{{ product.id }}">{{ product.title }}</h4>
          <p>Price: {{ product.price }},
             Availablity: {{ product.availability }}</p>
        </div>
@@ -32,23 +32,7 @@
         size="xlarge">
    </div>
    <script>
-     window.fbAsyncInit = function() {
-       FB.init({
-         appId      : '334467960089822',
-         xfbml      : true,
-         version    : 'v2.6'
-       });
-     };
-
-     (function(d, s, id){
-       var js, fjs = d.getElementsByTagName(s)[0];
-       if (d.getElementById(id)) {return;}
-       js = d.createElement(s); js.id = id;
-       js.src = "//connect.facebook.net/en_US/sdk.js";
-       fjs.parentNode.insertBefore(js, fjs);
-     }(document, 'script', 'facebook-jssdk'));
-
-     function fbMessengerConfirmOptIn() {
+    function fbMessengerConfirmOptIn() {
        FB.AppEvents.logEvent('MessengerCheckboxUserConfirmation', null, {
          'app_id':'334467960089822',
          'page_id':'1563357783913549',
@@ -56,7 +40,6 @@
          'user_ref':'{{ userref }}'
        });
      }
-
    </script>
 
    <a href="pay" class="btn btn-primary btn-block btn-pay">
@@ -83,6 +66,11 @@
          value: total,
          currency: 'USD'
        });
+       var params = {};
+       params[FB.AppEvents.ParameterNames.CONTENT_ID] = contentids.join();
+       params[FB.AppEvents.ParameterNames.CONTENT_TYPE] = 'product';
+       params[FB.AppEvents.ParameterNames.CURRENCY] =  'USD';
+       FB.AppEvents.logEvent(FB.AppEvents.EventNames.INITIATED_CHECKOUT, total, params);
        // return false;
      });
    })();
